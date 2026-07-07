@@ -3,6 +3,7 @@ package database.dao;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import database.DBConnection;
 import database.dao.UserDao;
@@ -27,7 +28,20 @@ public class UserDao extends BaseDao {
 	}
 
 	public User getUserByUsername(String username) {
-		// TODO Auto-generated method stub
+		String selectSQL = "SELECT * FROM users WHERE username = ?";
+		try (Connection connection = DBConnection.getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+			pstmt.setString(1, username);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int id = rs.getInt("id");
+				String usernameFromDB = rs.getString("username");
+				User user = new User(id, usernameFromDB);
+				return user;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Failed to get user by username: " + e.getMessage(), e);
+		}
 		return null;
 	}
 

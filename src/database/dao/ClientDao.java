@@ -3,6 +3,7 @@ package database.dao;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class ClientDao extends BaseDao {
 		String selectSQL = "SELECT * FROM clients ORDER BY name";
 		try (Connection connection = DBConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-				var resultSet = preparedStatement.executeQuery()) {
+				ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				Long id = resultSet.getLong("id");
 				String name = resultSet.getString("name");
@@ -42,11 +43,34 @@ public class ClientDao extends BaseDao {
 		}
 		return clients;
 	}
+	
+	public Client getClientById(Long id) {
+		String selectSQL = "SELECT * FROM clients WHERE id = ?";
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+			preparedStatement.setLong(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				String name = resultSet.getString("name");
+				String email = resultSet.getString("email");
+				return new Client(id, name, email);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Failed to retrieve client by ID: " + e.getMessage(), e);
+		}
+		return null;
+	}
 
 	public void updateClient(ClientDao client) {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void deleteClient(ClientDao client) {
+		// TODO Auto-generated method stub
+
+	}
+	
 
 	void ensureTable() throws SQLException {
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS clients (" +
