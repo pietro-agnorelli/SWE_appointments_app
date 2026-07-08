@@ -9,7 +9,7 @@ public class UserController {
 	UserView userView = new UserView();
 	UserDao userDao = new UserDao();
 	
-	public User userLogin() {
+	public User handleUserLogin() {
 		String username = userView.loginMenu();
 		User user = userDao.getUserByUsername(username);
 		if (user == null) {

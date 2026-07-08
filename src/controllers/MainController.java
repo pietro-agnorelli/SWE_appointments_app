@@ -10,13 +10,14 @@ public class MainController {
 	CommonView commonView = new CommonView();
 	UserController userController = new UserController();
 	ClientController clientController = new ClientController();
+	AppointmentController appointmentController = new AppointmentController();
 	
 	public void start() {
 		
 		while (true) {
 			User currentUser = AppSession.getInstance().getCurrentUser();
 			if (currentUser == null) {
-				currentUser = userController.userLogin();
+				currentUser = userController.handleUserLogin();
 				if (currentUser != null) {
 					AppSession.getInstance().setCurrentUser(currentUser);
 					commonView.displayMessage("Welcome, " + currentUser.getUsername() + "!");
@@ -29,10 +30,8 @@ public class MainController {
 					case 1:
 						clientController.manageClients();
 					case 2:
-						// Handle appointment management
+						appointmentController.viewUserAppointments();
 					case 3:
-						// Handle treatment management
-					case 4:
 						commonView.displayMessage("Exiting the application. Goodbye!");
 						AppSession.getInstance().clearCurrentUser();
 						continue;
