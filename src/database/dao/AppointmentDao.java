@@ -77,14 +77,15 @@ public class AppointmentDao extends BaseDao {
 	
 	@Override
 	void ensureTable() throws SQLException {
+		// SQLite-compatible table definition (INTEGER PRIMARY KEY AUTOINCREMENT)
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS appointments (" +
-				"id INT PRIMARY KEY AUTO_INCREMENT," +
-				"user_id INT NOT NULL," +
-				"client_id INT NOT NULL," +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"user_id INTEGER NOT NULL," +
+				"client_id INTEGER NOT NULL," +
 				"appointment_date TEXT NOT NULL," +
 				"start_time TEXT NOT NULL," +
 				"FOREIGN KEY (user_id) REFERENCES users(id)," +
-				"FOREIGN KEY (client_id) REFERENCES clients(id)," +
+				"FOREIGN KEY (client_id) REFERENCES clients(id)" +
 				")";
 		ensureTableExists(createTableSQL);
 	}

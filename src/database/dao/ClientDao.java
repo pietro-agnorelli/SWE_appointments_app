@@ -73,10 +73,11 @@ public class ClientDao extends BaseDao {
 	
 
 	void ensureTable() throws SQLException {
+		// SQLite-compatible table definition
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS clients (" +
-				"id INT PRIMARY KEY AUTO_INCREMENT," +
-				"name VARCHAR(255) NOT NULL," +
-				"email VARCHAR(255) NOT NULL UNIQUE," +
+				"id INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"name TEXT NOT NULL," +
+				"email TEXT NOT NULL UNIQUE" +
 				")";
 		ensureTableExists(createTableSQL);
 	}
