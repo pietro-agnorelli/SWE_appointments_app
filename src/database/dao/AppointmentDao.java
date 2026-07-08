@@ -1,5 +1,7 @@
 package database.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -9,15 +11,16 @@ import java.util.List;
 
 import database.DBConnection;
 import model.Appointment;
+import model.Client;
 import model.User;
 
 public class AppointmentDao extends BaseDao {
 	
-	public void addAppointment(Appointment appointment) throws SQLException {
+	public void addAppointment(Appointment appointment) {
 		String insertSQL = "INSERT INTO appointments "
 				+ "(user_id, client_id, appointment_date, start_time) VALUES (?, ?, ?, ?)";
-		try (var connection = DBConnection.getConnection();
-			 var pstmt = connection.prepareStatement(insertSQL)) {
+		try (Connection connection = DBConnection.getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
 			pstmt.setLong(1, appointment.getUserId());
 			pstmt.setLong(2, appointment.getClientId());
 			pstmt.setString(3, appointment.getDate().toString());
@@ -28,23 +31,19 @@ public class AppointmentDao extends BaseDao {
 		}
 	}
 	
-	public List<Appointment> getAppointmentsByUserId(User user) throws SQLException {
-		if (user == null) {
-			throw new IllegalArgumentException("User cannot be null");
-		}
+	public List<Appointment> getAppointmentsByUserId(User user){
 		List<Appointment> appointments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM appointments WHERE user_id = ? ORDER BY appointment_date, start_time";
-		try (var connection = DBConnection.getConnection();
-			 var pstmt = connection.prepareStatement(selectSQL)) {
+		try (Connection connection = DBConnection.getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
 			pstmt.setLong(1, user.getId());
 			try (ResultSet resultSet = pstmt.executeQuery()) {
 				while (resultSet.next()) {
 					long id = resultSet.getLong("id");
-					long userId = resultSet.getLong("user_id");
 					long clientId = resultSet.getLong("client_id");
 					String dateStr = resultSet.getString("appointment_date");
 					String startTimeStr = resultSet.getString("start_time");
-					Appointment appointment = new Appointment(id, userId, clientId, LocalDate.parse(dateStr), LocalTime.parse(startTimeStr));
+					Appointment appointment = new Appointment(id, user.getId(), clientId, LocalDate.parse(dateStr), LocalTime.parse(startTimeStr));
 					appointments.add(appointment);
 				}
 			}
@@ -53,7 +52,29 @@ public class AppointmentDao extends BaseDao {
 		}
 		return appointments;
 	}
-
+	
+	public List<Appointment> getAppointmentsByClientId(Client client){
+		List<Appointment> appointments = new ArrayList<>();
+		String selectSQL = "SELECT * FROM appointments WHERE client_id = ? ORDER BY appointment_date, start_time";
+		try (Connection connection = DBConnection.getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+			pstmt.setLong(1, client.getId());
+			try (ResultSet resultSet = pstmt.executeQuery()) {
+				while (resultSet.next()) {
+					long id = resultSet.getLong("id");
+					long userId = resultSet.getLong("user_id");
+					String dateStr = resultSet.getString("appointment_date");
+					String startTimeStr = resultSet.getString("start_time");
+					Appointment appointment = new Appointment(id, userId, client.getId(), LocalDate.parse(dateStr), LocalTime.parse(startTimeStr));
+					appointments.add(appointment);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Failed to retrieve appointments: " + e.getMessage(), e);
+		}
+		return appointments;
+	}
+	
 	@Override
 	void ensureTable() throws SQLException {
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS appointments (" +

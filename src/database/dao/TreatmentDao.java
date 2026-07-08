@@ -15,7 +15,7 @@ import model.Client;
 
 public class TreatmentDao extends BaseDao {
 	
-	public void addTreatment(Treatment treatment) throws SQLException {
+	public void addTreatment(Treatment treatment){
 		String insertSQL = "INSERT INTO treatments "
 				+ "(user_id, client_id, treatment_date, treatment_description) VALUES (?, ?, ?, ?)";
 		try (Connection connection = DBConnection.getConnection();
@@ -30,10 +30,7 @@ public class TreatmentDao extends BaseDao {
 		}
 	}
 	
-	public List<Treatment> getTreatmentsByClientId(Client client) throws SQLException {
-		if (client == null) {
-			throw new IllegalArgumentException("User cannot be null");
-		}
+	public List<Treatment> getTreatmentsByClientId(Client client){
 		List<Treatment> treatments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM treatments WHERE client_id = ? ORDER BY treatment_date";
 		try (Connection connection = DBConnection.getConnection();
@@ -43,10 +40,9 @@ public class TreatmentDao extends BaseDao {
 				while (resultSet.next()) {
 					long id = resultSet.getLong("id");
 					long userId = resultSet.getLong("user_id");
-					long clientId = resultSet.getLong("client_id");
 					String dateStr = resultSet.getString("treatment_date");
 					String description = resultSet.getString("treatment_description");
-					Treatment treatment = new Treatment(id, userId, clientId, LocalDate.parse(dateStr), description);
+					Treatment treatment = new Treatment(id, userId, client.getId(), LocalDate.parse(dateStr), description);
 					treatments.add(treatment);
 				}
 			}
