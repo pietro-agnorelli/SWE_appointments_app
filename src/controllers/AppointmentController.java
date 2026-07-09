@@ -40,7 +40,7 @@ public class AppointmentController {
 					addAppointment();
 					continue;
 				case 3:
-					return; // Exit to main menu
+					return;
 				default:
 					commonView.displayMessage("Invalid choice. Please try again.");
 			}

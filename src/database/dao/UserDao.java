@@ -22,11 +22,6 @@ public class UserDao extends BaseDao {
 		}
 	}
 
-	public User getUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public User getUserByUsername(String username) {
 		String selectSQL = "SELECT * FROM users WHERE username = ?";
 		try (Connection connection = DBConnection.getConnection();
@@ -45,8 +40,8 @@ public class UserDao extends BaseDao {
 		return null;
 	}
 
+	@Override
 	void ensureTable() throws SQLException {
-		// Use SQLite-compatible types and AUTOINCREMENT syntax
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
 				"id INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"username TEXT NOT NULL UNIQUE" +

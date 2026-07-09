@@ -61,19 +61,8 @@ public class ClientDao extends BaseDao {
 		return null;
 	}
 
-	public void updateClient(ClientDao client) {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public void deleteClient(ClientDao client) {
-		// TODO Auto-generated method stub
-
-	}
-	
-
+	@Override
 	void ensureTable() throws SQLException {
-		// SQLite-compatible table definition
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS clients (" +
 				"id INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"name TEXT NOT NULL," +
@@ -81,5 +70,4 @@ public class ClientDao extends BaseDao {
 				")";
 		ensureTableExists(createTableSQL);
 	}
-
 }

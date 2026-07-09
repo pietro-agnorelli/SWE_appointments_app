@@ -29,16 +29,16 @@ public class ClientView {
 	}
 	
 	public void displayCurrentClient(Client client) {
-		System.out.print("Current Client:");
+		System.out.print("Current Client: ");
 		System.out.println("ID: " + client.getId() + 
-				", Name: " + client.getName() + ", Email: " + client.getEmail());
+				" |  Name: " + client.getName() + " |  Email: " + client.getEmail());
 	}
 	
 	public void displayClients(List<Client> clients) {
 		System.out.println("List of Clients:");
 		for (Client client : clients) {
 			System.out.println("ID: " + client.getId() + 
-					", Name: " + client.getName() + ", Email: " + client.getEmail());
+					" |  Name: " + client.getName() + " |  Email: " + client.getEmail());
 		}
 	}
 	

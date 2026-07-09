@@ -20,20 +20,18 @@ public class AppointmentView {
 	public void displayUserAppointments(List<Appointment> appointments) {
 		System.out.println("Your Appointments:");
 		for (Appointment appointment : appointments) {
-			System.out.println("ID: " + appointment.getId() + 
-					", Client ID: " + appointment.getClientId() + 
-					", Date: " + appointment.getDate() + 
-					", Time: " + appointment.getStartTime());
+			System.out.println( "Client ID: " + appointment.getClientId() + 
+					" |  Date: " + appointment.getDate() + 
+					" |  Time: " + appointment.getStartTime());
 		}
 	}
 	
 	public void displayClientAppointments(List<Appointment> appointments) {
 		System.out.println("Client Appointments:");
 		for (Appointment appointment : appointments) {
-			System.out.println("ID: " + appointment.getId() + 
-					", User ID: " + appointment.getUserId() + 
-					", Date: " + appointment.getDate() + 
-					", Time: " + appointment.getStartTime());
+			System.out.println("User ID: " + appointment.getUserId() + 
+					" |  Date: " + appointment.getDate() + 
+					" |  Time: " + appointment.getStartTime());
 		}
 	}
 	
@@ -46,5 +44,4 @@ public class AppointmentView {
 		System.out.print("Enter appointment time (HH:MM): ");
 		return InputReader.getInstance().readLine();
 	}
-
 }

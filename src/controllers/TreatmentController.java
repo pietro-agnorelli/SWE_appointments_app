@@ -29,7 +29,7 @@ public class TreatmentController {
 					viewTreatments();
 					continue;
 				case 3:
-					return; // Exit the treatment management
+					return;
 				default:
 					System.out.println("Invalid choice. Please try again.");
 			}

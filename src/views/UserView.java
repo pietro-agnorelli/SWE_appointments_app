@@ -6,13 +6,13 @@ import model.User;
 public class UserView {
 	
 	public String loginMenu() {
-		System.out.println("Insert your username: ");
+		System.out.print("Insert your username: ");
 		String username = InputReader.getInstance().readLine();
 		return username;
 	}
 	
 	public User newUserMenu() {
-		System.out.println("Username not found. Do you want to create a new user? (y/n)");
+		System.out.print("Username not found. Do you want to create a new user? (y/n)");
 		String choice = InputReader.getInstance().readLine();
 		if (choice.equalsIgnoreCase("y")) {
 			System.out.println("Insert your username: ");
@@ -25,5 +25,4 @@ public class UserView {
 			return null;
 		}
 	}
-	
 }

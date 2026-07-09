@@ -27,10 +27,9 @@ public class TreatmentView {
 	public void displayTreatments(java.util.List<model.Treatment> treatments) {
 		System.out.println("List of Treatments:");
 		for (model.Treatment treatment : treatments) {
-			System.out.println("ID: " + treatment.getId() + 
-					", Client ID: " + treatment.getClientId() + 
-					", Date: " + treatment.getDate() + 
-					", Description: " + treatment.getDescription());
+			System.out.println("Client ID: " + treatment.getClientId() + 
+					" |  Date: " + treatment.getDate() + 
+					" |  Description: " + treatment.getDescription());
 		}
 	}
 }

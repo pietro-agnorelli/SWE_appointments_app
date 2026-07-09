@@ -22,15 +22,17 @@ public class MainController {
 					AppSession.getInstance().setCurrentUser(currentUser);
 					commonView.displayMessage("Welcome, " + currentUser.getUsername() + "!");
 				} else {
-					break; // Exit the application if user login fails or user chooses not to create a new user
+					break;
 				}
 			} else {
 				int choice = mainView.showMainMenu();
 				switch (choice) {
 					case 1:
 						clientController.manageClients();
+						continue;
 					case 2:
 						appointmentController.viewUserAppointments();
+						continue;
 					case 3:
 						commonView.displayMessage("Exiting the application. Goodbye!");
 						AppSession.getInstance().clearCurrentUser();
@@ -40,6 +42,5 @@ public class MainController {
 				}
 			}
 		}
-		
 	}
 }

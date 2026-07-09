@@ -10,10 +10,6 @@ public class DBConnection {
 	
 	private DBConnection() { }
 	
-	/*public static void setPath(String path) {
-		DBConnection.path = path;
-	}*/
-	
 	public static Connection getConnection() throws SQLException {
 		if (connection == null || connection.isClosed()) {
 			try {

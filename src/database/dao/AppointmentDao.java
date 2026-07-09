@@ -77,7 +77,6 @@ public class AppointmentDao extends BaseDao {
 	
 	@Override
 	void ensureTable() throws SQLException {
-		// SQLite-compatible table definition (INTEGER PRIMARY KEY AUTOINCREMENT)
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS appointments (" +
 				"id INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"user_id INTEGER NOT NULL," +

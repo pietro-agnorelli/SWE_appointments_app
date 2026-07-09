@@ -54,7 +54,6 @@ public class TreatmentDao extends BaseDao {
 
 	@Override
 	void ensureTable() throws SQLException {
-		// SQLite-compatible table definition
 		String createTableSQL = "CREATE TABLE IF NOT EXISTS treatments (" +
 				"id INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"user_id INTEGER NOT NULL," +
@@ -66,5 +65,4 @@ public class TreatmentDao extends BaseDao {
 				")";
 		ensureTableExists(createTableSQL);
 	}
-
 }

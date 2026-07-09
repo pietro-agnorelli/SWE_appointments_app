@@ -36,7 +36,7 @@ public class ClientController {
 					manageSelectedClient();
 					continue;
 				case 4:
-					return; // Exit to main menu
+					return;
 				default:
 					commonView.displayMessage("Invalid choice. Please try again.");
 			}
