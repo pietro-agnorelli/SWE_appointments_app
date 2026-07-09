@@ -1,1 +1,6 @@
 /bin/
+/database.db
+/sources.txt
+/.settings/
+/.classpath
+/.project
