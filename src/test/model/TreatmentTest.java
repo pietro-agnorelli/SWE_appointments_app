@@ -3,7 +3,6 @@ package test.model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 

@@ -26,5 +26,4 @@ class ClientTest {
 		assertEquals(id, 0);
 		assertEquals(id1, 1);
 	}
-
 }

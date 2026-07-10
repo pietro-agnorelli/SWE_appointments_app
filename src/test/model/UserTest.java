@@ -23,5 +23,4 @@ class UserTest {
 		assertEquals(id, 0);
 		assertEquals(id1, 1);
 	}
-
 }
