@@ -7,13 +7,13 @@ import views.TreatmentView;
 import views.CommonView;
 import model.Client;
 import model.Treatment;
+import services.TreatmentService;
 import utilities.AppSession;
-import database.dao.TreatmentDao;
 
 
 public class TreatmentController {
 	TreatmentView treatmentView = new TreatmentView();
-	TreatmentDao treatmentDao = new TreatmentDao();
+	TreatmentService treatmentService = new TreatmentService();
 	CommonView commonView = new CommonView();
 	
 	public void manageTreatments() {
@@ -23,7 +23,9 @@ public class TreatmentController {
 			
 			switch (choice) {
 				case 1:
-					addTreatment();
+					if(addTreatment()) {
+						commonView.displayMessage("Treatment added succesfully!");
+					}
 					continue;
 				case 2:
 					viewTreatments();
@@ -36,20 +38,23 @@ public class TreatmentController {
 		}
 	}
 	
-	public void addTreatment() {
-		String treatmentDescription = treatmentView.askForDescription();
+	public boolean addTreatment() {
+		String description = treatmentView.askForDescription();
 		String date = treatmentView.askForDate();
-		Treatment newTreatment = new Treatment(AppSession.getInstance().getCurrentUser().getId(),
-				AppSession.getInstance().getCurrentClient().getId(),
-				LocalDate.parse(date),
-				treatmentDescription);
-		treatmentDao.addTreatment(newTreatment);
-		commonView.displayMessage("Treatment added successfully.");
+		try {
+			treatmentService.add(AppSession.getInstance().getCurrentUser().getId(),
+					AppSession.getInstance().getCurrentClient().getId(),
+					date, description);
+		} catch (IllegalArgumentException e) {
+			commonView.displayMessage(e.getMessage());
+			return false;
+		}
+		return true;
 	}
 	
 	public void viewTreatments() {
 		Client currentClient = AppSession.getInstance().getCurrentClient();
-		List<Treatment> treatments = treatmentDao.getTreatmentsByClientId(currentClient);
+		List<Treatment> treatments = treatmentService.getByClientId(currentClient.getId());
 		if (treatments.isEmpty()) {
 			commonView.displayMessage("No treatments found for client: " + currentClient.getName());
 		} else {

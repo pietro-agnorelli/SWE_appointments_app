@@ -30,19 +30,19 @@ public class TreatmentDao extends BaseDao {
 		}
 	}
 	
-	public List<Treatment> getTreatmentsByClientId(Client client){
+	public List<Treatment> getTreatmentsByClientId(long clientId){
 		List<Treatment> treatments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM treatments WHERE client_id = ? ORDER BY treatment_date";
 		try (Connection connection = DBConnection.getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
-			pstmt.setLong(1, client.getId());
+			pstmt.setLong(1, clientId);
 			try (ResultSet resultSet = pstmt.executeQuery()) {
 				while (resultSet.next()) {
 					long id = resultSet.getLong("id");
 					long userId = resultSet.getLong("user_id");
 					String dateStr = resultSet.getString("treatment_date");
 					String description = resultSet.getString("treatment_description");
-					Treatment treatment = new Treatment(id, userId, client.getId(), LocalDate.parse(dateStr), description);
+					Treatment treatment = new Treatment(id, userId, clientId, LocalDate.parse(dateStr), description);
 					treatments.add(treatment);
 				}
 			}

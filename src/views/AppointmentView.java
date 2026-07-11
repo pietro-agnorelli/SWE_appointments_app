@@ -14,6 +14,9 @@ public class AppointmentView {
 		System.out.println("3. Back to Main Menu");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
+		if(choice == null || choice.trim().isEmpty()) {
+			return -1;
+		}
 		return Integer.parseInt(choice);
 	}
 	

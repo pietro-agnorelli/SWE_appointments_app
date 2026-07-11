@@ -8,7 +8,7 @@ import utilities.AppSession;
 import model.Appointment;
 import model.Client;
 import model.User;
-import database.dao.AppointmentDao;
+import services.AppointmentService;
 import views.AppointmentView;
 import views.ClientView;
 import views.CommonView;
@@ -17,11 +17,11 @@ public class AppointmentController {
 	CommonView commonView = new CommonView();
 	AppointmentView appointmentView = new AppointmentView();
 	ClientView clientView = new ClientView();
-	AppointmentDao appointmentDao = new AppointmentDao();
+	AppointmentService appointmentService = new AppointmentService();
 	
 	public void viewUserAppointments(){
 		User currentUser = AppSession.getInstance().getCurrentUser();
-		List<Appointment> appointments = appointmentDao.getAppointmentsByUserId(currentUser);
+		List<Appointment> appointments = appointmentService.getByUserId(currentUser.getId());
 		if (appointments.isEmpty()) {
 			commonView.displayMessage("No appointments found for user: " + currentUser.getUsername());
 		} else {
@@ -37,7 +37,9 @@ public class AppointmentController {
 					viewClientAppointments();
 					continue;
 				case 2:
-					addAppointment();
+					if(addAppointment()) {
+						commonView.displayMessage("Appointment added successfully!");
+					}
 					continue;
 				case 3:
 					return;
@@ -49,7 +51,7 @@ public class AppointmentController {
 	
 	public void viewClientAppointments() {
 		Client currentClient = AppSession.getInstance().getCurrentClient();
-		List<Appointment> appointments = appointmentDao.getAppointmentsByClientId(currentClient);
+		List<Appointment> appointments = appointmentService.getByClientId(currentClient.getId());
 		if (appointments.isEmpty()) {
 			commonView.displayMessage("No appointments found for client: " + currentClient.getName());
 		} else {
@@ -57,16 +59,19 @@ public class AppointmentController {
 		}
 	}
 	
-	public void addAppointment() {
+	public boolean addAppointment() {
 		String date = appointmentView.askForDate();
 		String time = appointmentView.askForTime();
-		Appointment newAppointment = new Appointment(AppSession.getInstance().getCurrentUser().getId(), 
-				AppSession.getInstance().getCurrentClient().getId(), 
-				LocalDate.parse(date), 
-				LocalTime.parse(time));
-		appointmentDao.addAppointment(newAppointment);
-		commonView.displayMessage("Appointment added successfully.");
+		try {
+			appointmentService.add(AppSession.getInstance().getCurrentUser().getId(), 
+					AppSession.getInstance().getCurrentClient().getId(), 
+					date, time);
+		} catch (IllegalArgumentException e) {
+			commonView.displayMessage(e.getMessage());
+			return false;
 		}
+		return true;
+	}
 		
 }
 	

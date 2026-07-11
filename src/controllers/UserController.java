@@ -3,24 +3,24 @@ package controllers;
 
 import views.CommonView;
 import views.UserView;
-import database.dao.UserDao;
+import services.UserService;
 import model.User;
 
 public class UserController {
 	UserView userView = new UserView();
 	CommonView commonView = new CommonView();
-	UserDao userDao = new UserDao();
+	UserService userService = new UserService();
 	
 	public User handleUserLogin() {
 		commonView.clearScreen();
 		String username = userView.loginMenu();
-		User user = userDao.getUserByUsername(username);
-		if (user == null) {
-			user=userView.newUserMenu();
-			if(user == null) {
-				return null;
-			} else {
-				userDao.addUser(user);
+		User user = userService.getByUsername(username);
+		if(user == null) {
+			try {
+				username = userView.newUserMenu();
+				user = userService.create(username);
+			} catch(IllegalArgumentException e) {
+				commonView.displayMessage(e.getMessage());
 			}
 		}
 		return user;

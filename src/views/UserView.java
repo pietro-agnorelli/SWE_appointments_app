@@ -11,15 +11,12 @@ public class UserView {
 		return username;
 	}
 	
-	public User newUserMenu() {
-		System.out.print("Username not found. Do you want to create a new user? (y/n)");
+	public String newUserMenu() {
+		System.out.print("Username not found. Do you want to create a new user? (y/n) ");
 		String choice = InputReader.getInstance().readLine();
 		if (choice.equalsIgnoreCase("y")) {
-			System.out.println("Insert your username: ");
-			String username = InputReader.getInstance().readLine();
-			User newUser = new User(username);
-			System.out.println("New user created: " + newUser.getUsername());
-			return newUser;
+			System.out.print("Insert new user's name: ");
+			return InputReader.getInstance().readLine();
 		} else {
 			System.out.println("Returning to main menu.");
 			return null;

@@ -31,19 +31,19 @@ public class AppointmentDao extends BaseDao {
 		}
 	}
 	
-	public List<Appointment> getAppointmentsByUserId(User user){
+	public List<Appointment> getAppointmentsByUserId(long userId){
 		List<Appointment> appointments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM appointments WHERE user_id = ? ORDER BY appointment_date, start_time";
 		try (Connection connection = DBConnection.getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
-			pstmt.setLong(1, user.getId());
+			pstmt.setLong(1, userId);
 			try (ResultSet resultSet = pstmt.executeQuery()) {
 				while (resultSet.next()) {
 					long id = resultSet.getLong("id");
 					long clientId = resultSet.getLong("client_id");
 					String dateStr = resultSet.getString("appointment_date");
 					String startTimeStr = resultSet.getString("start_time");
-					Appointment appointment = new Appointment(id, user.getId(), clientId, LocalDate.parse(dateStr), LocalTime.parse(startTimeStr));
+					Appointment appointment = new Appointment(id, userId, clientId, LocalDate.parse(dateStr), LocalTime.parse(startTimeStr));
 					appointments.add(appointment);
 				}
 			}
@@ -53,19 +53,19 @@ public class AppointmentDao extends BaseDao {
 		return appointments;
 	}
 	
-	public List<Appointment> getAppointmentsByClientId(Client client){
+	public List<Appointment> getAppointmentsByClientId(long clientId){
 		List<Appointment> appointments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM appointments WHERE client_id = ? ORDER BY appointment_date, start_time";
 		try (Connection connection = DBConnection.getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
-			pstmt.setLong(1, client.getId());
+			pstmt.setLong(1, clientId);
 			try (ResultSet resultSet = pstmt.executeQuery()) {
 				while (resultSet.next()) {
 					long id = resultSet.getLong("id");
 					long userId = resultSet.getLong("user_id");
 					String dateStr = resultSet.getString("appointment_date");
 					String startTimeStr = resultSet.getString("start_time");
-					Appointment appointment = new Appointment(id, userId, client.getId(), LocalDate.parse(dateStr), LocalTime.parse(startTimeStr));
+					Appointment appointment = new Appointment(id, userId, clientId, LocalDate.parse(dateStr), LocalTime.parse(startTimeStr));
 					appointments.add(appointment);
 				}
 			}

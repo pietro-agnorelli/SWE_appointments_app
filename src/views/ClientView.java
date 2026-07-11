@@ -15,6 +15,9 @@ public class ClientView {
 		System.out.println("4. Back to Main Menu");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
+		if(choice == null || choice.trim().isEmpty()) {
+			return -1;
+		}
 		return Integer.parseInt(choice);
 	}
 	
@@ -25,6 +28,9 @@ public class ClientView {
 		System.out.println("3. Back to Client Menu");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
+		if(choice == null || choice.trim().isEmpty()) {
+			return -1;
+		}
 		return Integer.parseInt(choice);
 	}
 	
