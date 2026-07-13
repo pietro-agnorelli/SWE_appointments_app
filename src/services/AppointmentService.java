@@ -25,6 +25,9 @@ public class AppointmentService {
 		if(!time.matches("([0-1]?[0-9]|2[0-3]):[0-5][0-9]")) {
 			throw new IllegalArgumentException("Time format is wrong");
 		}
+		if(LocalDate.parse(date).isBefore(LocalDate.now())) {
+			throw new IllegalArgumentException("Date cannot be from the past");
+		}
 		appointmentDao.addAppointment(new Appointment(userId, clientId, LocalDate.parse(date), LocalTime.parse(time)));
 	}
 	

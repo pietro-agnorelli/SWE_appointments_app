@@ -20,6 +20,9 @@ public class TreatmentService {
 		if(!date.matches("(19|20)\\d\\d([- \\.])(0[1-9]|1[012])\\2(0[1-9]|[12][0-9]|3[01])")) {
 			throw new IllegalArgumentException("Date format is wrong");
 		}
+		if(LocalDate.parse(date).isAfter(LocalDate.now())) {
+			throw new IllegalArgumentException("Date cannot be from the future");
+		}
 		treatmentDao.addTreatment(new Treatment(userId, clientId, LocalDate.parse(date), description));
 	}
 	
