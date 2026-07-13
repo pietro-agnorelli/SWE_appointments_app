@@ -15,11 +15,14 @@ import model.Client;
 
 public class TreatmentDao extends BaseDao {
 	
+	public TreatmentDao(Connection connection) {
+		super(connection);
+	}
+	
 	public void addTreatment(Treatment treatment){
 		String insertSQL = "INSERT INTO treatments "
 				+ "(user_id, client_id, treatment_date, treatment_description) VALUES (?, ?, ?, ?)";
-		try (Connection connection = DBConnection.getConnection();
-			 PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
 			pstmt.setLong(1, treatment.getUserId());
 			pstmt.setLong(2, treatment.getClientId());
 			pstmt.setString(3, treatment.getDate().toString());
@@ -33,8 +36,7 @@ public class TreatmentDao extends BaseDao {
 	public List<Treatment> getTreatmentsByClientId(long clientId){
 		List<Treatment> treatments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM treatments WHERE client_id = ? ORDER BY treatment_date";
-		try (Connection connection = DBConnection.getConnection();
-			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
 			pstmt.setLong(1, clientId);
 			try (ResultSet resultSet = pstmt.executeQuery()) {
 				while (resultSet.next()) {

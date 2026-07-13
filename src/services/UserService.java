@@ -1,10 +1,11 @@
 package services;
 
+import database.DBConnection;
 import database.dao.UserDao;
 import model.User;
 
 public class UserService {
-	private final UserDao userDao = new UserDao();
+	private final UserDao userDao = new UserDao(DBConnection.getConnection());
 	
 	public User create(String username) throws IllegalArgumentException{
 		if(username == null) {

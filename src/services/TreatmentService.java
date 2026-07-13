@@ -3,12 +3,13 @@ package services;
 import java.time.LocalDate;
 import java.util.List;
 
+import database.DBConnection;
 import database.dao.TreatmentDao;
 import model.Client;
 import model.Treatment;
 
 public class TreatmentService {
-	private final TreatmentDao treatmentDao = new TreatmentDao();
+	private final TreatmentDao treatmentDao = new TreatmentDao(DBConnection.getConnection());
 	
 	public void add(long userId, long clientId, String description, String date) throws IllegalArgumentException {
 		if(date == null) {

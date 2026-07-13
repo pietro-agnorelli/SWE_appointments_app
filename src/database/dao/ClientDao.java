@@ -12,11 +12,14 @@ import database.dao.ClientDao;
 import model.Client;
 
 public class ClientDao extends BaseDao {
+	
+	public ClientDao(Connection connection) {
+		super(connection);
+	}
 
 	public void addClient(Client client) {
 		String insertSQL = "INSERT INTO clients (name, email) VALUES (?, ?)";
-		try (Connection connection = DBConnection.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 			preparedStatement.setString(1, client.getName());
 			preparedStatement.setString(2, client.getEmail());
 			preparedStatement.executeUpdate();
@@ -28,9 +31,8 @@ public class ClientDao extends BaseDao {
 	public List<Client> getAllClients() {
 		List<Client> clients = new ArrayList<>();
 		String selectSQL = "SELECT * FROM clients ORDER BY name";
-		try (Connection connection = DBConnection.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				Long id = resultSet.getLong("id");
 				String name = resultSet.getString("name");
@@ -46,8 +48,7 @@ public class ClientDao extends BaseDao {
 	
 	public Client getClientById(Long id) {
 		String selectSQL = "SELECT * FROM clients WHERE id = ?";
-		try (Connection connection = DBConnection.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setLong(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {

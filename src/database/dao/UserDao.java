@@ -10,11 +10,14 @@ import database.dao.UserDao;
 import model.User;
 
 public class UserDao extends BaseDao {
+	
+	public UserDao(Connection connection) {
+		super(connection);
+	}
 
 	public void addUser(User user) {
 		String insertSQL = "INSERT INTO users (username) VALUES (?)";
-		try (Connection connection = DBConnection.getConnection();
-			 PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
 			pstmt.setString(1, user.getUsername());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -24,8 +27,7 @@ public class UserDao extends BaseDao {
 
 	public User getUserByUsername(String username) {
 		String selectSQL = "SELECT * FROM users WHERE username = ?";
-		try (Connection connection = DBConnection.getConnection();
-			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
 			pstmt.setString(1, username);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {

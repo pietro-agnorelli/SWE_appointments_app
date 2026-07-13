@@ -4,14 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import database.DBConnection;
 import database.dao.AppointmentDao;
 import model.Appointment;
 import model.Client;
 import model.User;
 
 public class AppointmentService {
-	private final AppointmentDao appointmentDao = new AppointmentDao();
-	
+	private final AppointmentDao appointmentDao = new AppointmentDao(DBConnection.getConnection());
+		
 	public void add(long userId, long clientId, String date, String time) throws IllegalArgumentException {
 		if(date == null) {
 			throw new IllegalArgumentException("Date cannot be null");

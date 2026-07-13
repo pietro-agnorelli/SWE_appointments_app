@@ -8,7 +8,11 @@ import database.DBConnection;
 
 public abstract class BaseDao {
 	
-	public BaseDao() {
+	protected final Connection connection;
+	
+	
+	public BaseDao(Connection connection) {
+		this.connection = connection;
 		try {
 			ensureTable();
 		} catch (SQLException e) {
@@ -20,8 +24,7 @@ public abstract class BaseDao {
 	abstract void ensureTable() throws SQLException;
 	
 	protected void ensureTableExists(String createTableSQL) throws SQLException {
-		try (Connection connection = DBConnection.getConnection();
-			 Statement stmt = connection.createStatement()) {
+		try (Statement stmt = connection.createStatement()) {
 			stmt.executeUpdate(createTableSQL);
 		}
 	}

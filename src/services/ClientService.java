@@ -2,11 +2,12 @@ package services;
 
 import java.util.List;
 
+import database.DBConnection;
 import database.dao.ClientDao;
 import model.Client;
 
 public class ClientService {
-	private final ClientDao clientDao = new ClientDao();
+	private final ClientDao clientDao = new ClientDao(DBConnection.getConnection());
 	
 	public void add (String name, String email) throws IllegalArgumentException{
 		if(name.trim().isEmpty()) {

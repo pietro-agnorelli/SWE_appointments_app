@@ -8,17 +8,27 @@ public class DBConnection {
 	private static Connection connection;
 	private static String path = "jdbc:sqlite:database.db";
 	
-	private DBConnection() { }
+	private DBConnection() {}
 	
-	public static Connection getConnection() throws SQLException {
-		if (connection == null || connection.isClosed()) {
+	public static void alternatePath(String newPath) {
+		path=newPath;
+	}
+	
+	public static void resetPath() {
+		path="jdbc:sqlite:database.db";
+	}
+	
+	public static Connection getConnection(){
 			try {
-				Class.forName("org.sqlite.JDBC");
-				connection = DriverManager.getConnection(path);
-			} catch (ClassNotFoundException e) {
-				throw new SQLException("SQLite JDBC driver not found", e);
+				if (connection == null || connection.isClosed()) {
+					Class.forName("org.sqlite.JDBC");
+					connection = DriverManager.getConnection(path);
+				}
+			} catch(SQLException e){
+				System.err.println("Connection error: " + e.getMessage());
+			}catch (ClassNotFoundException e) {
+				System.err.println("Missing SQLite driver: " + e.getMessage());
 			}
-		}
 		return connection;
 	}
 	
@@ -28,7 +38,7 @@ public class DBConnection {
 				connection.close();
 				connection = null;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				System.err.println("C: " + e.getMessage());
 			}
 		}
 	}

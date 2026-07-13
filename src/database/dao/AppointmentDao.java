@@ -16,11 +16,14 @@ import model.User;
 
 public class AppointmentDao extends BaseDao {
 	
+	public AppointmentDao(Connection connection) {
+		super(connection);
+	}
+	
 	public void addAppointment(Appointment appointment) {
 		String insertSQL = "INSERT INTO appointments "
 				+ "(user_id, client_id, appointment_date, start_time) VALUES (?, ?, ?, ?)";
-		try (Connection connection = DBConnection.getConnection();
-			 PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(insertSQL)) {
 			pstmt.setLong(1, appointment.getUserId());
 			pstmt.setLong(2, appointment.getClientId());
 			pstmt.setString(3, appointment.getDate().toString());
@@ -34,8 +37,7 @@ public class AppointmentDao extends BaseDao {
 	public List<Appointment> getAppointmentsByUserId(long userId){
 		List<Appointment> appointments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM appointments WHERE user_id = ? ORDER BY appointment_date, start_time";
-		try (Connection connection = DBConnection.getConnection();
-			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
 			pstmt.setLong(1, userId);
 			try (ResultSet resultSet = pstmt.executeQuery()) {
 				while (resultSet.next()) {
@@ -56,8 +58,7 @@ public class AppointmentDao extends BaseDao {
 	public List<Appointment> getAppointmentsByClientId(long clientId){
 		List<Appointment> appointments = new ArrayList<>();
 		String selectSQL = "SELECT * FROM appointments WHERE client_id = ? ORDER BY appointment_date, start_time";
-		try (Connection connection = DBConnection.getConnection();
-			 PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+		try (PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
 			pstmt.setLong(1, clientId);
 			try (ResultSet resultSet = pstmt.executeQuery()) {
 				while (resultSet.next()) {
