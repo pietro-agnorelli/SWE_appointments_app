@@ -1,5 +1,6 @@
 /bin/
 /database.db
+/test.db
 /sources.txt
 /.settings/
 /.classpath
