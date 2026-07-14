@@ -12,11 +12,11 @@ public class TreatmentService {
 	private final TreatmentDao treatmentDao = new TreatmentDao(DBConnection.getConnection());
 	
 	public void create(long userId, long clientId, String description, String date) throws IllegalArgumentException {
-		if(date == null) {
-			throw new IllegalArgumentException("Date cannot be null");
+		if(date.trim().isEmpty()) {
+			throw new IllegalArgumentException("Date cannot be empty");
 		}
-		if(description == null) {
-			throw new IllegalArgumentException("Description cannot be null");
+		if(description.trim().isEmpty()) {
+			throw new IllegalArgumentException("Description cannot be empty");
 		}
 		LocalDate parsedDate;
 		try {
@@ -25,7 +25,7 @@ public class TreatmentService {
 			throw new IllegalArgumentException("Date format is wrong");
 		}
 		if(parsedDate.isAfter(LocalDate.now())) {
-			throw new IllegalArgumentException("Date cannot be from the future");
+			throw new IllegalArgumentException("Cannot add treatments to the future");
 		}
 		treatmentDao.addTreatment(new Treatment(userId, clientId, parsedDate, description));
 	}

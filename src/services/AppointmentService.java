@@ -34,7 +34,7 @@ public class AppointmentService {
 			throw new IllegalArgumentException("Time format is wrong");
 		}
 		if(parsedDate.isBefore(LocalDate.now())) {
-			throw new IllegalArgumentException("Date cannot be from the past");
+			throw new IllegalArgumentException("Cannot add appointments to the past");
 		}
 		appointmentDao.addAppointment(new Appointment(userId, clientId, parsedDate, parsedTime));
 	}
