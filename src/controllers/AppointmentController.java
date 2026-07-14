@@ -63,7 +63,7 @@ public class AppointmentController {
 		String date = appointmentView.askForDate();
 		String time = appointmentView.askForTime();
 		try {
-			appointmentService.add(AppSession.getInstance().getCurrentUser().getId(), 
+			appointmentService.create(AppSession.getInstance().getCurrentUser().getId(), 
 					AppSession.getInstance().getCurrentClient().getId(), 
 					date, time);
 		} catch (IllegalArgumentException e) {

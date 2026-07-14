@@ -42,7 +42,7 @@ public class TreatmentController {
 		String description = treatmentView.askForDescription();
 		String date = treatmentView.askForDate();
 		try {
-			treatmentService.add(AppSession.getInstance().getCurrentUser().getId(),
+			treatmentService.create(AppSession.getInstance().getCurrentUser().getId(),
 					AppSession.getInstance().getCurrentClient().getId(),
 					date, description);
 		} catch (IllegalArgumentException e) {

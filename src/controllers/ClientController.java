@@ -59,7 +59,7 @@ public class ClientController {
 		String name = clientView.askForName();
 		String email = clientView.askForEmail();
 		try {
-			clientService.add(name, email);
+			clientService.create(name, email);
 		} catch (IllegalArgumentException e) {
 			commonView.displayMessage(e.getMessage());
 			return false;
