@@ -2,6 +2,7 @@ package services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import database.DBConnection;
@@ -13,23 +14,29 @@ import model.User;
 public class AppointmentService {
 	private final AppointmentDao appointmentDao = new AppointmentDao(DBConnection.getConnection());
 		
-	public void add(long userId, long clientId, String date, String time) throws IllegalArgumentException {
-		if(date == null) {
-			throw new IllegalArgumentException("Date cannot be null");
+	public void create(long userId, long clientId, String date, String time) throws IllegalArgumentException {
+		if(date.trim().isEmpty()) {
+			throw new IllegalArgumentException("Date cannot be empty");
 		}
-		if(time == null) {
-			throw new IllegalArgumentException("Starting time cannot be null");
+		if(time.trim().isEmpty()) {
+			throw new IllegalArgumentException("Starting time cannot be empty");
 		}
-		if(!date.matches("(19|20)\\d\\d([- \\.])(0[1-9]|1[012])\\2(0[1-9]|[12][0-9]|3[01])")) {
+		LocalDate parsedDate;
+		try {
+			parsedDate = LocalDate.parse(date);
+		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Date format is wrong");
 		}
-		if(!time.matches("([0-1]?[0-9]|2[0-3]):[0-5][0-9]")) {
+		LocalTime parsedTime;
+		try {
+			parsedTime = LocalTime.parse(time);
+		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Time format is wrong");
 		}
-		if(LocalDate.parse(date).isBefore(LocalDate.now())) {
+		if(parsedDate.isBefore(LocalDate.now())) {
 			throw new IllegalArgumentException("Date cannot be from the past");
 		}
-		appointmentDao.addAppointment(new Appointment(userId, clientId, LocalDate.parse(date), LocalTime.parse(time)));
+		appointmentDao.addAppointment(new Appointment(userId, clientId, parsedDate, parsedTime));
 	}
 	
 	public List<Appointment> getByUserId (long id){
