@@ -69,5 +69,16 @@ class ClientDaoTest {
 		assertEquals(2, result.size());
 		assertEquals(2, result.getLast().getId());
 	}
+	
+	@Test
+	void testGetByEmail() throws SQLException{
+		Client test = new Client("test", "test@test.it");
+		clientDao.addClient(test);
+		Client result = clientDao.getClientByEmail(test.getEmail());
+		assertNotNull(result);
+		assertEquals(1, result.getId());
+		assertEquals(test.getName(), result.getName());
+		assertEquals(test.getEmail(), result.getEmail());
+	}
 
 }

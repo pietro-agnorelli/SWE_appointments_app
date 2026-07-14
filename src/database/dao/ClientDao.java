@@ -61,6 +61,22 @@ public class ClientDao extends BaseDao {
 		}
 		return null;
 	}
+	
+	public Client getClientByEmail(String email) {
+		String selectSQL = "SELECT * FROM clients WHERE email = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+			preparedStatement.setString(1, email);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				Long id = resultSet.getLong("id");
+				String name = resultSet.getString("name");
+				return new Client(id, name, email);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Failed to retrieve client by email: " + e.getMessage(), e);
+		}
+		return null;
+	}
 
 	@Override
 	void ensureTable() throws SQLException {
