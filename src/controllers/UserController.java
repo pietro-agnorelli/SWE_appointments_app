@@ -22,6 +22,14 @@ public class UserController {
 			} catch(IllegalArgumentException e) {
 				commonView.displayMessage(e.getMessage());
 			}
+			while(user==null) {
+				try {
+					username=userView.newUserMenu_NewUsername();
+					user=userService.create(username);
+				} catch(IllegalArgumentException e) {
+					commonView.displayMessage(e.getMessage());
+				}
+			}
 		}
 		return user;
 	}

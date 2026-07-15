@@ -15,11 +15,15 @@ public class UserView {
 		System.out.print("Username not found. Do you want to create a new user? (y/n) ");
 		String choice = InputReader.getInstance().readLine();
 		if (choice.equalsIgnoreCase("y")) {
-			System.out.print("Insert new user's name: ");
-			return InputReader.getInstance().readLine();
+			return newUserMenu_NewUsername();
 		} else {
 			System.out.println("Returning to main menu.");
 			return null;
 		}
+	}
+	
+	public String newUserMenu_NewUsername() {
+		System.out.print("Insert new user's name: ");
+		return InputReader.getInstance().readLine();
 	}
 }
