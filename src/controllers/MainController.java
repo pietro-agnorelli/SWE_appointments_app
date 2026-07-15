@@ -18,9 +18,6 @@ public class MainController {
 			User currentUser = AppSession.getInstance().getCurrentUser();
 			if (currentUser == null) {
 				currentUser = userController.handleUserLogin();
-				if(currentUser==null) {
-					continue;
-				}
 				if (currentUser.getId() > 0) {
 					AppSession.getInstance().setCurrentUser(currentUser);
 					commonView.displayMessage("Welcome, " + currentUser.getUsername() + "!");
