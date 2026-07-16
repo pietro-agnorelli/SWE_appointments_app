@@ -15,6 +15,8 @@ public class ClientController {
 	AppointmentController appointmentController = new AppointmentController();
 	ClientService clientService = new ClientService();
 	
+	public ClientController() {}
+	
 	public void manageClients() {
 		
 		while (true) {
@@ -34,9 +36,10 @@ public class ClientController {
 					}
 					continue;
 				case 3:
-					selectClient();
-					manageSelectedClient();
-					AppSession.getInstance().clearCurrentClient();
+					if(selectClient()) {
+						manageSelectedClient();
+						AppSession.getInstance().clearCurrentClient();
+					}
 					continue;
 				case 4:
 					return;
@@ -67,14 +70,15 @@ public class ClientController {
 		return true;
 	}
 	
-	public void selectClient() {
+	public boolean selectClient() {
 		long selectedClientId = clientView.selectClient();
 		Client selectedClient = clientService.getById(selectedClientId);
-		if (selectedClient != null) {
-			AppSession.getInstance().setCurrentClient(selectedClient);
-		} else {
+		if (selectedClient == null) {
 			commonView.displayMessage("Client not found.");
+			return false;
 		}
+		AppSession.getInstance().setCurrentClient(selectedClient);
+		return true;
 	}
 	
 	public void manageSelectedClient() {
@@ -95,5 +99,12 @@ public class ClientController {
 			}
 		}
 	}
-
+	
+	public ClientController(CommonView commonView, ClientView clientView, TreatmentController treatmentController, AppointmentController appointmentController, ClientService clientService) {
+		this.commonView = commonView;
+		this.clientView = clientView;
+		this.treatmentController = treatmentController;
+		this.appointmentController = appointmentController;
+		this.clientService = clientService;
+	}
 }
