@@ -11,7 +11,7 @@ import model.Treatment;
 public class TreatmentService {
 	private final TreatmentDao treatmentDao = new TreatmentDao(DBConnection.getConnection());
 	
-	public void create(long userId, long clientId, String description, String date) throws IllegalArgumentException {
+	public void create(long userId, long clientId, String date, String description) throws IllegalArgumentException {
 		if(date.trim().isEmpty()) {
 			throw new IllegalArgumentException("Date cannot be empty");
 		}
