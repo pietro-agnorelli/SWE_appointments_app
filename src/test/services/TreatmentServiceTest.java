@@ -19,6 +19,7 @@ public class TreatmentServiceTest {
 	
 	@BeforeAll
 	static void alternativeDatabase() throws SQLException{
+		DBConnection.closeConnection();
 		DBConnection.alternatePath("jdbc:sqlite:test.db");
 	}
 	
@@ -30,7 +31,7 @@ public class TreatmentServiceTest {
 	@AfterEach
 	void teardown() throws SQLException{
 		Connection connection = DBConnection.getConnection();
-		PreparedStatement statement = connection.prepareStatement("DROP TABLE treatments");
+		PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS treatments");
 		PreparedStatement statement1 = connection.prepareStatement("UPDATE sqlite_sequence SET seq=0 WHERE name= 'treatments'");
 		statement.executeUpdate();
 		statement1.executeUpdate();
@@ -38,12 +39,13 @@ public class TreatmentServiceTest {
 	
 	@AfterAll
 	static void resetDatabase() {
+		DBConnection.closeConnection();
 		DBConnection.resetPath();
 	}
 	
 	@Test
 	void testCreateTreatment(){
-		treatmentService.create(1, 1, "test", LocalDate.now().minusDays(2).toString());
+		treatmentService.create(1, 1, LocalDate.now().minusDays(2).toString(), "test");
 		Treatment treatment = treatmentService.getByClientId(1).getFirst();
 		assertNotNull(treatment);
 		assertEquals(1, treatment.getId());
@@ -56,7 +58,7 @@ public class TreatmentServiceTest {
 	@Test
 	void testCreateTreatment_EmptyDate(){
 		Exception exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", "");
+			treatmentService.create(1, 1, "", "test");
 		});
 		assertEquals("Date cannot be empty", exception.getMessage());
 	}
@@ -64,7 +66,7 @@ public class TreatmentServiceTest {
 	@Test
 	void testCreateTreatment_EmptyDescription(){
 		Exception exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "", "09:00");
+			treatmentService.create(1, 1, LocalDate.now().minusDays(2).toString(), "");
 		});
 		assertEquals("Description cannot be empty", exception.getMessage());
 	}
@@ -73,32 +75,32 @@ public class TreatmentServiceTest {
 	void testCreateTreatment_WrongFormatDate(){
 		
 		Exception exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", "20200101");
+			treatmentService.create(1, 1, "20200101", "test");
 		});
 		assertEquals("Date format is wrong", exception.getMessage());
 		
 		exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", "2020/01/01");
+			treatmentService.create(1, 1, "2020/01/01", "test");
 		});
 		assertEquals("Date format is wrong", exception.getMessage());
 		
 		exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", "01-01-2020");
+			treatmentService.create(1, 1, "01-01-2020", "test");
 		});
 		assertEquals("Date format is wrong", exception.getMessage());
 		
 		exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", "2020-13-01");
+			treatmentService.create(1, 1, "2020-13-01", "test");
 		});
 		assertEquals("Date format is wrong", exception.getMessage());
 		
 		exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", "2020-01-32");
+			treatmentService.create(1, 1, "2020-01-32", "test");
 		});
 		assertEquals("Date format is wrong", exception.getMessage());
 		
 		exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", "2020-02-30");
+			treatmentService.create(1, 1, "2020-02-30", "test");
 		});
 		assertEquals("Date format is wrong", exception.getMessage());
 	}
@@ -106,7 +108,7 @@ public class TreatmentServiceTest {
 	@Test
 	void testCreateTreatment_FutureDate(){
 		Exception exception = assertThrows(IllegalArgumentException.class, () ->{
-			treatmentService.create(1, 1, "test", LocalDate.now().plusDays(2).toString());
+			treatmentService.create(1, 1, LocalDate.now().plusDays(2).toString(), "test");
 		});
 		assertEquals("Cannot add treatments to the future", exception.getMessage());
 	}

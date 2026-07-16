@@ -20,6 +20,7 @@ public class AppointmentServiceTest {
 	
 	@BeforeAll
 	static void alternativeDatabase() throws SQLException{
+		DBConnection.closeConnection();
 		DBConnection.alternatePath("jdbc:sqlite:test.db");
 	}
 	
@@ -31,7 +32,7 @@ public class AppointmentServiceTest {
 	@AfterEach
 	void teardown() throws SQLException{
 		Connection connection = DBConnection.getConnection();
-		PreparedStatement statement = connection.prepareStatement("DROP TABLE appointments");
+		PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS appointments");
 		PreparedStatement statement1 = connection.prepareStatement("UPDATE sqlite_sequence SET seq=0 WHERE name= 'appointments'");
 		statement.executeUpdate();
 		statement1.executeUpdate();
@@ -39,6 +40,7 @@ public class AppointmentServiceTest {
 	
 	@AfterAll
 	static void resetDatabase() {
+		DBConnection.closeConnection();
 		DBConnection.resetPath();
 	}
 	

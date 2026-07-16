@@ -18,6 +18,7 @@ public class UserServiceTest {
 	
 	@BeforeAll
 	static void alternativeDatabase() throws SQLException{
+		DBConnection.closeConnection();
 		DBConnection.alternatePath("jdbc:sqlite:test.db");
 	}
 	
@@ -29,7 +30,7 @@ public class UserServiceTest {
 	@AfterEach
 	void teardown() throws SQLException{
 		Connection connection = DBConnection.getConnection();
-		PreparedStatement statement = connection.prepareStatement("DROP TABLE users");
+		PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS users");
 		PreparedStatement statement1 = connection.prepareStatement("UPDATE sqlite_sequence SET seq=0 WHERE name= 'users'");
 		statement.executeUpdate();
 		statement1.executeUpdate();
@@ -37,6 +38,7 @@ public class UserServiceTest {
 	
 	@AfterAll
 	static void resetDatabase() {
+		DBConnection.closeConnection();
 		DBConnection.resetPath();
 	}
 	

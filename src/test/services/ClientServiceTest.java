@@ -18,6 +18,7 @@ private static ClientService clientService;
 	
 	@BeforeAll
 	static void alternativeDatabase() throws SQLException{
+		DBConnection.closeConnection();
 		DBConnection.alternatePath("jdbc:sqlite:test.db");
 	}
 	
@@ -29,7 +30,7 @@ private static ClientService clientService;
 	@AfterEach
 	void teardown() throws SQLException{
 		Connection connection = DBConnection.getConnection();
-		PreparedStatement statement = connection.prepareStatement("DROP TABLE clients");
+		PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS clients");
 		PreparedStatement statement1 = connection.prepareStatement("UPDATE sqlite_sequence SET seq=0 WHERE name= 'clients'");
 		statement.executeUpdate();
 		statement1.executeUpdate();
@@ -37,6 +38,7 @@ private static ClientService clientService;
 	
 	@AfterAll
 	static void resetDatabase() {
+		DBConnection.closeConnection();
 		DBConnection.resetPath();
 	}
 	
