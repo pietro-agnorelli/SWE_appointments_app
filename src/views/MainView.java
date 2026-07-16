@@ -12,9 +12,12 @@ public class MainView {
 		System.out.println("3. Logout");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
-		if(choice == null || choice.trim().isEmpty()) {
-			return -1;
+		int output = 0;
+		try {
+			output = Integer.parseInt(choice);
+		} catch (NumberFormatException e) {
+			output = 0;
 		}
-		return Integer.parseInt(choice);
+		return output;
 	}
 }

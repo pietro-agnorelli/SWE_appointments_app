@@ -11,13 +11,16 @@ public class AppointmentView {
 		System.out.println("Appointment Menu:");
 		System.out.println("1. View Appointments");
 		System.out.println("2. Add Appointment");
-		System.out.println("3. Back to Main Menu");
+		System.out.println("3. Exit");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
-		if(choice == null || choice.trim().isEmpty()) {
-			return -1;
+		int output = 0;
+		try {
+			output = Integer.parseInt(choice);
+		} catch (NumberFormatException e) {
+			output = 0;
 		}
-		return Integer.parseInt(choice);
+		return output;
 	}
 	
 	public void displayUserAppointments(List<Appointment> appointments) {

@@ -15,23 +15,29 @@ public class ClientView {
 		System.out.println("4. Back to Main Menu");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
-		if(choice == null || choice.trim().isEmpty()) {
-			return -1;
+		int output = 0;
+		try {
+			output = Integer.parseInt(choice);
+		} catch (NumberFormatException e) {
+			output = 0;
 		}
-		return Integer.parseInt(choice);
+		return output;
 	}
 	
 	public int showSelectedClientMenu() {
 		System.out.println("Selected Client Menu:");
 		System.out.println("1. Manage Treatments");
 		System.out.println("2. Manage Appointments");
-		System.out.println("3. Back to Client Menu");
+		System.out.println("3. Exit");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
-		if(choice == null || choice.trim().isEmpty()) {
-			return -1;
+		int output = 0;
+		try {
+			output = Integer.parseInt(choice);
+		} catch (NumberFormatException e) {
+			output = 0;
 		}
-		return Integer.parseInt(choice);
+		return output;
 	}
 	
 	public void displayCurrentClient(Client client) {
@@ -61,7 +67,13 @@ public class ClientView {
 	public long selectClient() {
 		System.out.print("Enter client ID to select: ");
 		String id = InputReader.getInstance().readLine();
-		return Long.parseLong(id);
+		long output = 0;
+		try {
+			output = Long.parseLong(id);
+		} catch (NumberFormatException e) {
+			output = 0;
+		}
+		return output;
 	}
 
 }

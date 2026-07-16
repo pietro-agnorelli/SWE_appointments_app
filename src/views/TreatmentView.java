@@ -1,5 +1,8 @@
 package views;
 
+import java.util.List;
+
+import model.Treatment;
 import utilities.InputReader;
 
 public class TreatmentView {
@@ -11,10 +14,13 @@ public class TreatmentView {
 		System.out.println("3. Exit");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
-		if(choice == null || choice.trim().isEmpty()) {
-			return -1;
+		int output = 0;
+		try {
+			output = Integer.parseInt(choice);
+		} catch (NumberFormatException e) {
+			output = 0;
 		}
-		return Integer.parseInt(choice);
+		return output;
 	}
 	
 	public String askForDescription() {
@@ -27,9 +33,9 @@ public class TreatmentView {
 		return InputReader.getInstance().readLine();
 	}
 	
-	public void displayTreatments(java.util.List<model.Treatment> treatments) {
+	public void displayTreatments(List<Treatment> treatments) {
 		System.out.println("List of Treatments:");
-		for (model.Treatment treatment : treatments) {
+		for (Treatment treatment : treatments) {
 			System.out.println("Client ID: " + treatment.getClientId() + 
 					" |  Date: " + treatment.getDate() + 
 					" |  Description: " + treatment.getDescription());
