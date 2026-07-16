@@ -1,6 +1,5 @@
 package controllers;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import views.TreatmentView;
@@ -15,6 +14,8 @@ public class TreatmentController {
 	TreatmentView treatmentView = new TreatmentView();
 	TreatmentService treatmentService = new TreatmentService();
 	CommonView commonView = new CommonView();
+	
+	public TreatmentController() {}
 	
 	public void manageTreatments() {
 		while (true) {
@@ -33,7 +34,7 @@ public class TreatmentController {
 				case 3:
 					return;
 				default:
-					System.out.println("Invalid choice. Please try again.");
+					commonView.displayMessage("Invalid choice. Please try again.");
 			}
 		}
 	}
@@ -60,7 +61,11 @@ public class TreatmentController {
 		} else {
 			treatmentView.displayTreatments(treatments);
 		}
-		
 	}
-
+	
+	public TreatmentController(TreatmentView treatmentView, TreatmentService treatmentService, CommonView commonView) {
+		this.treatmentView = treatmentView;
+		this.treatmentService = treatmentService;
+		this.commonView = commonView;
+	}
 }

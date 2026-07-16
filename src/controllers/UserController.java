@@ -11,6 +11,8 @@ public class UserController {
 	CommonView commonView = new CommonView();
 	UserService userService = new UserService();
 	
+	public UserController() {}
+	
 	public User handleUserLogin() {
 		commonView.clearScreen();
 		String username = userView.loginMenu();
@@ -32,5 +34,11 @@ public class UserController {
 			}
 		}
 		return user;
+	}
+	
+	public UserController(UserView userView, CommonView commonView, UserService userService) { 
+		this.userView = userView; 
+		this.commonView = commonView; 
+		this.userService = userService;
 	}
 }

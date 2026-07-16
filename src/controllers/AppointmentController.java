@@ -1,8 +1,6 @@
 package controllers;
 
 import java.util.List;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import utilities.AppSession; 
 import model.Appointment;
@@ -10,25 +8,15 @@ import model.Client;
 import model.User;
 import services.AppointmentService;
 import views.AppointmentView;
-import views.ClientView;
 import views.CommonView;
 
 public class AppointmentController {
-	CommonView commonView = new CommonView();
 	AppointmentView appointmentView = new AppointmentView();
-	ClientView clientView = new ClientView();
 	AppointmentService appointmentService = new AppointmentService();
+	CommonView commonView = new CommonView();
 	
-	public void viewUserAppointments(){
-		User currentUser = AppSession.getInstance().getCurrentUser();
-		List<Appointment> appointments = appointmentService.getByUserId(currentUser.getId());
-		if (appointments.isEmpty()) {
-			commonView.displayMessage("No appointments found for user: " + currentUser.getUsername());
-		} else {
-			appointmentView.displayUserAppointments(appointments);
-		}
-	}
-	
+	public AppointmentController() {}
+
 	public void manageAppointments() {
 		while (true) {
 			int choice = appointmentView.showAppointmentMenu();
@@ -46,6 +34,17 @@ public class AppointmentController {
 				default:
 					commonView.displayMessage("Invalid choice. Please try again.");
 			}
+		}
+	}
+	
+	
+	public void viewUserAppointments(){
+		User currentUser = AppSession.getInstance().getCurrentUser();
+		List<Appointment> appointments = appointmentService.getByUserId(currentUser.getId());
+		if (appointments.isEmpty()) {
+			commonView.displayMessage("No appointments found for user: " + currentUser.getUsername());
+		} else {
+			appointmentView.displayUserAppointments(appointments);
 		}
 	}
 	
@@ -72,7 +71,12 @@ public class AppointmentController {
 		}
 		return true;
 	}
-		
+	
+	public AppointmentController(AppointmentView appointmentView, AppointmentService appointmentService, CommonView commonView) {
+		this.appointmentView = appointmentView;
+		this.appointmentService = appointmentService;
+		this.commonView = commonView;
+	}
 }
 	
 	
