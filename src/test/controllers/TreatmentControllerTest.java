@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.*;
 
@@ -89,7 +86,7 @@ public class TreatmentControllerTest {
 	}
 	
 	
-	
+	//Stand-In class that simulates TreatmentView expected behavior
 	class FakeTreatmentView extends TreatmentView{
 		private String description;
 		private String date;

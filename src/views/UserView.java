@@ -1,7 +1,6 @@
 package views;
 
 import utilities.InputReader;
-import model.User;
 
 public class UserView {
 	

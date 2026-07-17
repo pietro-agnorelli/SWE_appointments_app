@@ -9,10 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.DBConnection;
 import model.Appointment;
-import model.Client;
-import model.User;
 
 public class AppointmentDao extends BaseDao {
 	

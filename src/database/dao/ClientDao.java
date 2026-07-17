@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.ArrayList;
 
-import database.DBConnection;
 import database.dao.ClientDao;
 import model.Client;
 

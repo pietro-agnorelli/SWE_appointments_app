@@ -8,34 +8,40 @@ import java.util.List;
 import database.DBConnection;
 import database.dao.AppointmentDao;
 import model.Appointment;
-import model.Client;
-import model.User;
 
 public class AppointmentService {
 	private final AppointmentDao appointmentDao = new AppointmentDao(DBConnection.getConnection());
 		
 	public void create(long userId, long clientId, String date, String time) throws IllegalArgumentException {
+		
 		if(date.trim().isEmpty()) {
 			throw new IllegalArgumentException("Date cannot be empty");
 		}
+		
 		if(time.trim().isEmpty()) {
 			throw new IllegalArgumentException("Starting time cannot be empty");
 		}
+		
+		//LocalDate parser used to check date format is correct
 		LocalDate parsedDate;
 		try {
 			parsedDate = LocalDate.parse(date);
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Date format is wrong");
 		}
+		
+		//LocalTime parser used to check time format is correct
 		LocalTime parsedTime;
 		try {
 			parsedTime = LocalTime.parse(time);
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException("Time format is wrong");
 		}
+		
 		if(parsedDate.isBefore(LocalDate.now())) {
 			throw new IllegalArgumentException("Cannot add appointments to the past");
 		}
+		
 		appointmentDao.addAppointment(new Appointment(userId, clientId, parsedDate, parsedTime));
 	}
 	

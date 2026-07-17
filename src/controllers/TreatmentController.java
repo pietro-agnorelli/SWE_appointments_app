@@ -63,6 +63,7 @@ public class TreatmentController {
 		}
 	}
 	
+	//Constructor used in testing
 	public TreatmentController(TreatmentView treatmentView, TreatmentService treatmentService, CommonView commonView) {
 		this.treatmentView = treatmentView;
 		this.treatmentService = treatmentService;

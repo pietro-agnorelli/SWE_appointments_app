@@ -106,7 +106,7 @@ public class UserControllerTest {
 	}
 	
 	
-	
+	//Stand-In class that simulates UserView expected behavior
 	class FakeUserView extends UserView{
 		private String loginInput;
 		private boolean newUserCreation;

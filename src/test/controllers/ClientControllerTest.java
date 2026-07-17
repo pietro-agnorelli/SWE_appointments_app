@@ -124,7 +124,7 @@ public class ClientControllerTest {
 	}
 	
 	
-	
+	//Stand-In class that simulates ClientView expected behavior
 	class FakeClientView extends ClientView{
 		private String name;
 		private String email;
@@ -180,8 +180,8 @@ public class ClientControllerTest {
 			return displayedClientsCount;
 		}	
 	}
-
-
+	
+	//Stand-In class that simulates TreatmentController expected behavior
 	class FakeTreatmentController extends TreatmentController {
 	    int manageTreatmentsCount = 0;
 
@@ -190,7 +190,8 @@ public class ClientControllerTest {
 	        manageTreatmentsCount++;
 	    }
 	}
-
+	
+	//Stand-In class that simulates AppointmentController expected behavior
 	class FakeAppointmentController extends AppointmentController {
 	    int manageAppointmentsCount = 0;
 

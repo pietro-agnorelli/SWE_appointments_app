@@ -9,15 +9,7 @@ public class DBConnection {
 	private static String path = "jdbc:sqlite:database.db";
 	
 	private DBConnection() {}
-	
-	public static void alternatePath(String newPath) {
-		path=newPath;
-	}
-	
-	public static void resetPath() {
-		path="jdbc:sqlite:database.db";
-	}
-	
+
 	public static Connection getConnection(){
 			try {
 				if (connection == null || connection.isClosed()) {
@@ -42,4 +34,14 @@ public class DBConnection {
 			}
 		}
 	}
+	
+	//Used in testing to access test database and reset path to nominal database
+	public static void alternatePath(String newPath) {
+		path=newPath;
+	}
+	
+	public static void resetPath() {
+		path="jdbc:sqlite:database.db";
+	}
+	
 }

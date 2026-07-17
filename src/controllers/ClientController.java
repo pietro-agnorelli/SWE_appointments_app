@@ -100,6 +100,7 @@ public class ClientController {
 		}
 	}
 	
+	//Constructor used in testing
 	public ClientController(CommonView commonView, ClientView clientView, TreatmentController treatmentController, AppointmentController appointmentController, ClientService clientService) {
 		this.commonView = commonView;
 		this.clientView = clientView;

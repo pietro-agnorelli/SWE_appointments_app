@@ -72,6 +72,7 @@ public class AppointmentController {
 		return true;
 	}
 	
+	//Constructor used in testing
 	public AppointmentController(AppointmentView appointmentView, AppointmentService appointmentService, CommonView commonView) {
 		this.appointmentView = appointmentView;
 		this.appointmentService = appointmentService;

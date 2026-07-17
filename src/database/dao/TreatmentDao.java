@@ -8,10 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import database.DBConnection;
 import model.Treatment;	
-import model.Client;
 
 public class TreatmentDao extends BaseDao {
 	

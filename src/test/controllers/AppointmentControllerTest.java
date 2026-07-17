@@ -98,7 +98,7 @@ public class AppointmentControllerTest {
 	}
 	
 	
-	
+	//Stand-In class that simulates AppointmentView expected behavior
 	class FakeAppointmentView extends AppointmentView{
 		private String date;
 		private String time;

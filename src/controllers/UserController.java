@@ -36,6 +36,7 @@ public class UserController {
 		return user;
 	}
 	
+	//Constructor used in testing
 	public UserController(UserView userView, CommonView commonView, UserService userService) { 
 		this.userView = userView; 
 		this.commonView = commonView; 

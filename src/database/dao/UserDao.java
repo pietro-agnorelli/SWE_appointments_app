@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import database.DBConnection;
 import database.dao.UserDao;
 import model.User;
 

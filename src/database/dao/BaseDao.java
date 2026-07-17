@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import database.DBConnection;
-
 public abstract class BaseDao {
 	
 	protected final Connection connection;
-	
 	
 	public BaseDao(Connection connection) {
 		this.connection = connection;
