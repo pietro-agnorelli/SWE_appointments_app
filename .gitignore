@@ -2,14 +2,9 @@
 /database.db
 /test.db
 /sources.txt
-/.settings/
-/.classpath
-/.project
 /target/
 *.class
-/lib/
 /build.log
 .classpath 
-.project 
 .project 
 .settings/ 
