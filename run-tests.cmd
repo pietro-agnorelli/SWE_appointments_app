@@ -1,6 +1,6 @@
 @echo off
 echo Running tests...
-mvn clean test
+call mvn clean test
 if errorlevel 1 (
   echo Tests failed!
   pause
