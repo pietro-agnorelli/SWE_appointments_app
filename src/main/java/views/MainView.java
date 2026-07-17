@@ -10,6 +10,7 @@ public class MainView {
 		System.out.println("1. Manage Clients");
 		System.out.println("2. See your Appointments");
 		System.out.println("3. Logout");
+		System.out.println("4. Close Application");
 		System.out.print("Enter your choice: ");
 		String choice = InputReader.getInstance().readLine();
 		int output = 0;

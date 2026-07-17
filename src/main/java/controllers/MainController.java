@@ -34,9 +34,12 @@ public class MainController {
 						appointmentController.viewUserAppointments();
 						continue;
 					case 3:
-						commonView.displayMessage("Exiting the application. Goodbye!");
+						commonView.displayMessage("Logging Out. See you later!");
 						AppSession.getInstance().clearCurrentUser();
 						continue;
+					case 4:
+						commonView.displayMessage("Closing the app. Goodbye!");
+						System.exit(0);
 					default:
 						commonView.displayMessage("Invalid choice. Please try again.");
 				}
