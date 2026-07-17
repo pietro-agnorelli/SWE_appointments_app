@@ -9,3 +9,7 @@
 *.class
 /lib/
 /build.log
+.classpath 
+.project 
+.project 
+.settings/ 
