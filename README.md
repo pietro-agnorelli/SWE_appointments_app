@@ -1,5 +1,4 @@
-To start app run "build-and-run" from terminal
-The script will build, run tests and then run the application
-build.log file will be created after build attempt
+To start app run <span style="color:blue">**"build-and-run"**</span> from terminal.<br>
+The script will build, run tests and then run the application. <br> **build.log** file will be created after build attempt.
 
-To only run tests, use "run-tests" which will show results in terminal window
+<br>To only run tests, use <span style="color:green"> **"run-tests"** </span> which will show results in terminal window
